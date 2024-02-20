@@ -1,12 +1,13 @@
 package bibliotheque.metier;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Ouvrage {
     protected String titre;
     protected int ageMin;
-    protected String dateParution;
+    protected LocalDate dateParution;
     protected TypeOuvrage to;
     protected double prixLocation;
     protected String langue;
@@ -16,7 +17,7 @@ public abstract class Ouvrage {
     protected List<Exemplaire> lex = new ArrayList<>();
 
 
-    public Ouvrage(String titre, int ageMin, String dateParution, TypeOuvrage to, double prixLocation, String langue, String genre) {
+    public Ouvrage(String titre, int ageMin, LocalDate dateParution, TypeOuvrage to, double prixLocation, String langue, String genre) {
         this.titre = titre;
         this.ageMin = ageMin;
         this.dateParution = dateParution;
@@ -42,11 +43,11 @@ public abstract class Ouvrage {
         this.ageMin = ageMin;
     }
 
-    public String getDateParution() {
+    public LocalDate getDateParution() {
         return dateParution;
     }
 
-    public void setDateParution(String dateParution) {
+    public void setDateParution(LocalDate dateParution) {
         this.dateParution = dateParution;
     }
 
@@ -108,8 +109,6 @@ public abstract class Ouvrage {
                 ", prixLocation=" + prixLocation +
                 ", langue='" + langue + '\'' +
                 ", genre='" + genre + '\'' +
-                ", lauteurs=" + lauteurs +
-                ", lex=" + lex +
                 '}';
     }
 }
