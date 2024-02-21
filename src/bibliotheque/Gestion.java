@@ -1,15 +1,13 @@
 package bibliotheque;
 
 import bibliotheque.metier.*;
-
-import java.time.LocalDate;
-
 import static bibliotheque.metier.TypeOuvrage.*;
-
+import static bibliotheque.metier.TypeLivre.*;
+import java.time.LocalDate;
     public class Gestion {
         public static void main(String[] args) {
             Auteur a = new Auteur("Verne","Jules","France");
-            Livre l = new Livre("Vingt mille lieues sous les mers",10, LocalDate.of(1880,1,1),LIVRE,1.50,"français","aventure","a125",350,TypeLivre.ROMAN,"histoire de sous-marin");
+            Livre l = new Livre("Vingt mille lieues sous les mers",10, LocalDate.of(1880,1,1),LIVRE,1.50,"français","aventure","a125",350,ROMAN,"histoire de sous-marin");
             a.getLouvrage().add(l);
             l.getLauteurs().add(a);
             Rayon r = new Rayon("r12","aventure");
