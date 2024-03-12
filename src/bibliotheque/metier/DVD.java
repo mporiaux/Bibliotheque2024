@@ -13,7 +13,7 @@ public class DVD extends Ouvrage{
     private byte nbreBonus;
     private List<String> autresLangues=new ArrayList<>();
     private List<String> sousTitres=new ArrayList<>();
-    public DVD(String titre, int ageMin, LocalDate dateParution, TypeOuvrage to, double prixLocation, String langue, String genre, long code, String dureeTotale, byte nbreBonus) {
+    public DVD(String titre, int ageMin, LocalDate dateParution, double prixLocation, String langue, String genre, long code, String dureeTotale, byte nbreBonus) {
         super(titre, ageMin, dateParution, DVD, prixLocation, langue, genre);
         this.code=code;
        this.dureeTotale=dureeTotale;
