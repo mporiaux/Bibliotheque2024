@@ -75,4 +75,9 @@ public class Livre extends Ouvrage{
                 ", resume='" + resume + '\'' +
                 "} " + super.toString();
     }
+    @Override
+    public double amendeRetard(int njours) {
+        //TODO amendeRetard livre
+        return 0;
+    }
 }
