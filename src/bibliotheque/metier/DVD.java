@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import static bibliotheque.metier.TypeOuvrage.DVD;
 
 public class DVD extends Ouvrage{
 
@@ -13,7 +14,7 @@ public class DVD extends Ouvrage{
     private List<String> autresLangues=new ArrayList<>();
     private List<String> sousTitres=new ArrayList<>();
     public DVD(String titre, int ageMin, LocalDate dateParution, TypeOuvrage to, double prixLocation, String langue, String genre, long code, String dureeTotale, byte nbreBonus) {
-        super(titre, ageMin, dateParution, to, prixLocation, langue, genre);
+        super(titre, ageMin, dateParution, DVD, prixLocation, langue, genre);
         this.code=code;
        this.dureeTotale=dureeTotale;
        this.nbreBonus=nbreBonus;
