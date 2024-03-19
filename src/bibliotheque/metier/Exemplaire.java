@@ -1,5 +1,7 @@
 package bibliotheque.metier;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -12,13 +14,17 @@ public class Exemplaire {
     private Ouvrage ouvrage;
     private Rayon rayon;
 
+    private String etat;
+
+
     private List<Location> lloc= new ArrayList<>();
 
 
-    public Exemplaire(String matricule, String descriptionEtat,Ouvrage ouvrage) {
+    public Exemplaire(String matricule, String descriptionEtat,Ouvrage ouvrage){
         this.matricule = matricule;
         this.descriptionEtat=descriptionEtat;
         this.ouvrage = ouvrage;
+
         this.ouvrage.getLex().add(this);
     }
 
@@ -56,7 +62,9 @@ public class Exemplaire {
     }
 
     public void setOuvrage(Ouvrage ouvrage) {
+        if(this.ouvrage!=null) this.ouvrage.getLex().remove(this);
         this.ouvrage = ouvrage;
+        this.ouvrage.getLex().add(this);
     }
 
     public Rayon getRayon() {
@@ -88,40 +96,61 @@ public class Exemplaire {
     }
 
     public void modifierEtat(String etat){
-        //TODO modifier etat exemplaire
+       setDescriptionEtat(etat);
     }
 
     public Lecteur lecteurActuel(){
-        //TODO lecteur actuel exemplaire
+        if(enLocation()) return lloc.get(lloc.size()-1).getLoueur();
         return null;
     }
     public List<Lecteur> lecteurs(){
-        //lecteurs exemplaire
+        List<Lecteur> ll = new ArrayList<>();
+        for(Location l : lloc){
+            if(ll.contains(l)) continue; //par la suite utiliser set
+            ll.add(l.getLoueur());
+        }
         return null;
     }
 
     public void envoiMailLecteurActuel(Mail mail){
-        //TODO envoi mail lecteur exemplaire
+        if(lecteurActuel()!=null) System.out.println("envoi de "+mail+ " à "+lecteurActuel().getMail());
+        else System.out.println("aucune location en cours");
     }
     public void envoiMailLecteurs(Mail mail){
-        //TODO envoi mail lecteurs exemplaire
+        List<Lecteur>ll=lecteurs();
+        if(ll.isEmpty()){
+            System.out.println("aucun lecteur enregistré");
+        }
+        else{
+            for(Lecteur l: ll){
+                System.out.println("envoi de "+mail+ " à "+l.getMail());
+            }
+        }
     }
 
-    public boolean enRetard(){
-        //TODO enretard exeplaire
+    public boolean enRetard(){ //par retard on entend pas encore restitué et en retard
+        if(lloc.isEmpty()) return false;
+        Location l = lloc.get(lloc.size()-1); //la location en cours est la dernière  de la liste, sauf si elle est terminée
+        if(l.getDateRestitution()==null && l.getDateLocation().plusDays(ouvrage.njlocmax()).isAfter(LocalDate.now())) return true;
         return false;
     }
 
     public int joursRetard(){
-        //TODO jours retard exemplaire
-        return 0;
+        if(!enRetard()) return 0;
+        Location l = lloc.get(lloc.size()-1);//la location en cours est la dernière de la liste
+        LocalDate dateLim = l.getDateLocation().plusDays(ouvrage.njlocmax());
+        int njretard = (int)ChronoUnit.DAYS.between(dateLim, LocalDate.now());
+        return njretard;
     }
 
 
     public boolean enLocation(){
-        //TODO en location exemplaires
+        if(lloc.isEmpty()) return false;
+        Location l = lloc.get(lloc.size()-1);//la location en cours est la dernière de la liste
+        if(l.getDateRestitution()==null) return true;
         return false;
     }
+
 
 
 }

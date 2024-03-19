@@ -1,20 +1,20 @@
 package bibliotheque.metier;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import static bibliotheque.metier.TypeOuvrage.DVD;
 
 public class DVD extends Ouvrage{
 
     private long code;
-    private String dureeTotale;
+    private LocalTime dureeTotale;
     private byte nbreBonus;
     private List<String> autresLangues=new ArrayList<>();
     private List<String> sousTitres=new ArrayList<>();
-    public DVD(String titre, int ageMin, LocalDate dateParution, double prixLocation, String langue, String genre, long code, String dureeTotale, byte nbreBonus) {
-        super(titre, ageMin, dateParution, DVD, prixLocation, langue, genre);
+    public DVD(String titre, int ageMin, LocalDate dateParution, double prixLocation, String langue, String genre, long code, LocalTime dureeTotale, byte nbreBonus) {
+        super(titre, ageMin, dateParution, TypeOuvrage.DVD, prixLocation, langue, genre);
         this.code=code;
        this.dureeTotale=dureeTotale;
        this.nbreBonus=nbreBonus;
@@ -28,11 +28,11 @@ public class DVD extends Ouvrage{
         this.code = code;
     }
 
-    public String getDureeTotale() {
+    public LocalTime getDureeTotale() {
         return dureeTotale;
     }
 
-    public void setDureeTotale(String dureeTotale) {
+    public void setDureeTotale(LocalTime dureeTotale) {
         this.dureeTotale = dureeTotale;
     }
 
@@ -72,6 +72,16 @@ public class DVD extends Ouvrage{
     public int hashCode() {
         return Objects.hash(code);
     }
+    @Override
+    public double amendeRetard(int njours) {
+
+        return njours * 1.50;
+    }
+
+    @Override
+    public int njlocmax() {
+        return 3;
+    }
 
     @Override
     public String toString() {
@@ -82,10 +92,5 @@ public class DVD extends Ouvrage{
                 ", autresLangues=" + autresLangues +
                 ", sousTitres=" + sousTitres +
                 "} " + super.toString();
-    }
-    @Override
-    public double amendeRetard(int njours) {
-        //TODO amendeRetard DVD
-        return 0;
     }
 }
