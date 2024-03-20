@@ -143,6 +143,7 @@ public class Gestion {
         System.out.println("genre ");
         String genre=sc.next();
         Rayon r = new Rayon(code,genre);
+        lrayon.add(r);
         System.out.println("rayon créé");
     }
 
