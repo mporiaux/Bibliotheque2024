@@ -69,6 +69,6 @@ public class CD extends Ouvrage{
                 "code=" + code +
                 ", nbrePlages=" + nbrePlages +
                 ", dureeTotale='" + dureeTotale + '\'' +
-                "} " + super.toString();
+                "} " ;
     }
 }

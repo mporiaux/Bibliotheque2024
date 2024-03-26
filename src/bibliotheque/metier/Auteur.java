@@ -3,8 +3,7 @@ package bibliotheque.metier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import static bibliotheque.metier.TypeOuvrage.LIVRE;
+import static bibliotheque.metier.TypeOuvrage.*;
 
 
 public class Auteur {
@@ -16,6 +15,7 @@ public class Auteur {
         this.nom = nom;
         this.prenom = prenom;
         this.nationalite = nationalite;
+
     }
 
     public String getNom() {

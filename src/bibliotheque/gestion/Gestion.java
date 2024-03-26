@@ -1,7 +1,7 @@
 package bibliotheque.gestion;
 
 import bibliotheque.metier.*;
-import bibliotheque.utilitaires.Utilitaire;
+import bibliotheque.utilitaires.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -82,7 +82,7 @@ public class Gestion {
     }
 
     private void menu() {
-        List options = new ArrayList<>(Arrays.asList("auteurs","ouvrages","exemplaires","rayons","lecteurs","locations","fin"));
+        List options = new ArrayList<>(Arrays.asList("auteurs","ouvrages","exemplaires","rayons","lecteurs","locations","restitution","fin"));
       do{
         int choix = Utilitaire.choixListe(options);
 
@@ -93,13 +93,19 @@ public class Gestion {
                 case 4 : gestRayons();break;
                 case 5 : gestLecteurs();break;
                 case 6 : gestLocations();break;
+                case 7 : gestRestitution();break;
                 default:System.exit(0);
             }
         }  while (true);
     }
 
+    private void gestRestitution() {
+        //TODO lister exemplaires en location , choisir l'un d'entre eux, enregistrer sa restitution et éventuellement changer état
+    }
+
     private void gestLocations() {
         int choix;
+        //TODO ne lister que les exemplaires libres et les trier par matricule
         choix = Utilitaire.choixListe(lex);
         if(lex.get(choix).enLocation()){
             System.out.println("exemplaire en location");
@@ -145,6 +151,8 @@ public class Gestion {
         Rayon r = new Rayon(code,genre);
         lrayon.add(r);
         System.out.println("rayon créé");
+
+        //TODO attribuer exemplaire, les exemplaires sont triés par ordre de titre de l'ouvrage , empêcher doublons sur l'exemplaire
     }
 
     private void gestExemplaires() {
@@ -157,11 +165,11 @@ public class Gestion {
         Exemplaire ex = new Exemplaire(mat,etat,louv.get(choix-1));
         lex.add(ex);
         System.out.println("exemplaire créé");
-        //TODO attribuer rayon
+        //TODO attribuer rayon , les rayons sont triès par ordre de code
     }
 
     private void gestOuvrages() {
-        Ouvrage o = null;
+      /*  Ouvrage o = null;
         System.out.println("titre");
         String titre= sc.nextLine();
         System.out.println("age minimum");
@@ -198,7 +206,7 @@ public class Gestion {
                 case 2 :
                             System.out.println("code : ");
                             long code= sc.nextLong();
-                            System.out.println("nombre de pages :");
+                            System.out.println("nombre de plages :");
                             byte nbrePlages= sc.nextByte();
                             LocalTime dureeTotale = Utilitaire.lecTime();
                             o=new CD(titre,ageMin,dp,ploc,langue,genre,code,nbrePlages,dureeTotale);
@@ -223,10 +231,25 @@ public class Gestion {
                              ((DVD)o).getSousTitres().add(langues.get(choix-1));//TODO vérifier unicité ou utiliser set
                              }while(true);
                             ;break;
-            }
-           louv.add(o);
+            }*/
+
+
+
+        TypeOuvrage[] tto = TypeOuvrage.values();
+        List<TypeOuvrage> lto = new ArrayList<>(Arrays.asList(tto));
+        int choix = Utilitaire.choixListe(lto);
+        Ouvrage o = null;
+
+     /*switch(choix) {
+            case 1 : o = new LivreFactoryBeta().create();break;
+            case 2 : o = new CDFactoryBeta().create();break;
+            case 3 : o = new DVDFactoryBeta().create();break;
+        }*/
+        List<OuvrageFactory> lof = new ArrayList<>(Arrays.asList(new LivreFactory(),new CDFactory(),new DVDFactory()));
+        o = lof.get(choix-1).create();
+        louv.add(o);
         System.out.println("ouvrage créé");
-        //TODO ajouter 1 auteur à la liste des auteurs
+        //TODO attribuer auteurs, les auteur sont triés par odre de nom et prénom, empêcher doublons
     }
 
        private void gestAuteurs() {
@@ -239,6 +262,7 @@ public class Gestion {
         Auteur a  = new Auteur(nom,prenom,nat);
         laut.add(a);
         System.out.println("écrivain créé");
+        //TODO attribuer ouvrages , les ouvrages sont triés par ordre de titre
     }
 
     public static void main(String[] args) {
