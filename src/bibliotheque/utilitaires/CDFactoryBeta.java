@@ -1,15 +1,10 @@
 package bibliotheque.utilitaires;
 
 import bibliotheque.metier.CD;
-import bibliotheque.metier.Livre;
 import bibliotheque.metier.Ouvrage;
-import bibliotheque.metier.TypeLivre;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 public class CDFactoryBeta {

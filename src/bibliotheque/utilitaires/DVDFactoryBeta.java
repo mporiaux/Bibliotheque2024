@@ -1,9 +1,7 @@
 package bibliotheque.utilitaires;
 
 import bibliotheque.metier.DVD;
-import bibliotheque.metier.Livre;
 import bibliotheque.metier.Ouvrage;
-import bibliotheque.metier.TypeLivre;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -43,13 +41,25 @@ public class DVDFactoryBeta {
         do{
             choix=Utilitaire.choixListe(langues);
             if(choix==langues.size())break;
-            dvd.getAutresLangues().add(langues.get(choix-1));//TODO vérifier unicité ou utiliser set et pas de doublon avec langue d'origine
+            String alangue = langues.get(choix-1);
+            if(alangue.equals(langue)) {
+                System.out.println("c'est la langue originale");
+                continue;
+            }
+            boolean ok = dvd.getAutresLangues().add(langues.get(choix-1));
+            if(ok) System.out.println("langue ajoutée");
+            else
+                System.out.println("langue déjà encodée");
         }while(true);
         System.out.println("sous-titres");
         do{
             choix=Utilitaire.choixListe(langues);
             if(choix==langues.size())break;
-            dvd.getSousTitres().add(langues.get(choix-1));//TODO vérifier unicité ou utiliser set
+            String alangue = langues.get(choix-1);
+            boolean ok = dvd.getSousTitres().add(langues.get(choix-1));
+            if(ok) System.out.println("langue ajoutée");
+            else
+                System.out.println("langue déjà encodée");
         }while(true);
         return dvd;
     }

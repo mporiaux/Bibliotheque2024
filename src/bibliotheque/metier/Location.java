@@ -1,7 +1,6 @@
 package bibliotheque.metier;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 

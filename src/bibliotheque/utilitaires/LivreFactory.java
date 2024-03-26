@@ -3,7 +3,6 @@ package bibliotheque.utilitaires;
 import bibliotheque.metier.Livre;
 import bibliotheque.metier.Ouvrage;
 import bibliotheque.metier.TypeLivre;
-import bibliotheque.metier.TypeOuvrage;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

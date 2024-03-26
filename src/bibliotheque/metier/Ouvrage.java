@@ -14,8 +14,9 @@ public abstract class Ouvrage {
     protected String genre;
 
     protected List<Auteur> lauteurs=new ArrayList<>();
+    //TODO remplacer par set
     protected List<Exemplaire> lex = new ArrayList<>();
-
+    //TODO remplacer par set
 
     public Ouvrage(String titre, int ageMin, LocalDate dateParution, TypeOuvrage to, double prixLocation, String langue, String genre) {
         this.titre = titre;

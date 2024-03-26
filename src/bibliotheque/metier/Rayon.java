@@ -8,6 +8,7 @@ public class Rayon {
     private String codeRayon;
     private String genre;
     private List<Exemplaire> lex = new ArrayList<>();
+    //TODO remplacer par set
 
     public Rayon(String codeRayon, String genre) {
         this.codeRayon = codeRayon;
