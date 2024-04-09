@@ -1,9 +1,7 @@
 package bibliotheque.gestion;
 
 import bibliotheque.metier.*;
-import bibliotheque.utilitaires.CDFactoryBeta;
-import bibliotheque.utilitaires.DVDFactoryBeta;
-import bibliotheque.utilitaires.LivreFactoryBeta;
+import bibliotheque.utilitaires.*;
 import bibliotheque.utilitaires.comparators.*;
 
 import java.time.LocalDate;
@@ -12,7 +10,7 @@ import java.util.*;
 
 import static bibliotheque.utilitaires.Utilitaire.choixListe;
 
-public class Gestion {
+public class GestionOld {
     Scanner sc = new Scanner(System.in);
 //on a ôté static pour les listes qui n'est plus nécessaire
     private List<Auteur> laut = new ArrayList<>();
@@ -20,7 +18,8 @@ public class Gestion {
     private List<Ouvrage> louv= new ArrayList<>();
     private List<Exemplaire> lex = new ArrayList<>();
     private List<Rayon> lrayon= new ArrayList<>();
-    private List<Location> lloc = new ArrayList<>();
+
+    public static final Map<Exemplaire,Lecteur> LOCATIONS = new HashMap();
 
 
     public void populate(){
@@ -72,15 +71,10 @@ public class Gestion {
         Lecteur lec = new Lecteur(1,"Dupont","Jean",LocalDate.of(2000,1,4),"Mons","jean.dupont@mail.com","0458774411");
         llect.add(lec);
 
-        Location loc = new Location(LocalDate.of(2023,2,1),LocalDate.of(2023,3,1),lec,e);
-        lloc.add(loc);
-        loc.setDateRestitution(LocalDate.of(2023,2,4));
+        LOCATIONS.put(e,lec);
 
         lec = new Lecteur(1,"Durant","Aline",LocalDate.of(1980,10,10),"Binche","aline.durant@mail.com","045874444");
         llect.add(lec);
-
-        loc = new Location(LocalDate.of(2023,2,5),LocalDate.of(2023,3,5),lec,e);
-        lloc.add(loc);
     }
 
     private void menu() {
@@ -119,7 +113,7 @@ public class Gestion {
         choix=choixListe(llect);
         if(choix==0)return;
         Lecteur lec = llect.get(choix-1);
-        lloc.add(new Location(lec,ex));
+        LOCATIONS.put(ex,lec);
     }
 
     private void gestLecteurs() {
@@ -190,70 +184,6 @@ public class Gestion {
            }
 
     private void gestOuvrages() {
-      /*  Ouvrage o = null;
-        System.out.println("titre");
-        String titre= sc.nextLine();
-        System.out.println("age minimum");
-        int ageMin= sc.nextInt();
-        sc.skip("\n");
-        System.out.println("date de parution");
-
-        LocalDate dp= Utilitaire.lecDate();
-        System.out.println("prix de location");
-        double ploc = sc.nextDouble();
-        sc.skip("\n");
-        System.out.println("langue");
-        String langue=sc.nextLine();
-        System.out.println("genre");
-        String genre=sc.nextLine();
-        TypeOuvrage[] tto = TypeOuvrage.values();
-        List<TypeOuvrage> lto = new ArrayList<>(Arrays.asList(tto));
-        int choix = Utilitaire.choixListe(lto);
-        switch (choix){
-                case 1 :
-                           System.out.println("isbn ");
-                           String isbn = sc.next();
-                           System.out.println("pages ");
-                           int nbrePages = sc.nextInt();
-                           sc.skip("\n");
-                           TypeLivre[] ttl = TypeLivre.values();
-                           List<TypeLivre> ltl = new ArrayList<>(Arrays.asList(ttl));
-                            choix = Utilitaire.choixListe(ltl);
-                            TypeLivre tl = ttl[choix-1];
-                           System.out.println("résumé du livre :");
-                           String resume = sc.nextLine();
-                           o=new Livre(titre,ageMin,dp,ploc,langue,genre,isbn,nbrePages,tl,resume);
-                           ;break;
-                case 2 :
-                            System.out.println("code : ");
-                            long code= sc.nextLong();
-                            System.out.println("nombre de plages :");
-                            byte nbrePlages= sc.nextByte();
-                            LocalTime dureeTotale = Utilitaire.lecTime();
-                            o=new CD(titre,ageMin,dp,ploc,langue,genre,code,nbrePlages,dureeTotale);
-                            ;break;
-                case 3 :
-                            System.out.println("code : ");
-                            code= sc.nextLong();
-                            dureeTotale=Utilitaire.lecTime();
-                            byte nbreBonus= sc.nextByte();
-                            o=new DVD(titre,ageMin,dp,ploc,langue,genre,code,dureeTotale,nbreBonus);
-                            System.out.println("autres langues");
-                            List<String> langues = new ArrayList<>(Arrays.asList("anglais","français","italien","allemand","fin"));
-                            do{
-                                choix=Utilitaire.choixListe(langues);
-                                if(choix==langues.size())break;
-                                ((DVD)o).getAutresLangues().add(langues.get(choix-1));//TODO vérifier unicité ou utiliser set et pas de doublon avec langue d'origine
-                            }while(true);
-                           System.out.println("sous-titres");
-                            do{
-                             choix=Utilitaire.choixListe(langues);
-                             if(choix==langues.size())break;
-                             ((DVD)o).getSousTitres().add(langues.get(choix-1));//TODO vérifier unicité ou utiliser set
-                             }while(true);
-                            ;break;
-            }*/
-
 
 
         TypeOuvrage[] tto = TypeOuvrage.values();
@@ -262,13 +192,14 @@ public class Gestion {
         if(choix==0) return;
         Ouvrage o = null;
 
-     switch(choix) {
+    /* switch(choix) {
             case 1 : o = new LivreFactoryBeta().create();break;
             case 2 : o = new CDFactoryBeta().create();break;
             case 3 : o = new DVDFactoryBeta().create();break;
-        }
-       /* List<OuvrageFactory> lof = new ArrayList<>(Arrays.asList(new LivreFactory(),new CDFactory(),new DVDFactory()));
-        o = lof.get(choix-1).create();*/
+        }*/
+        List<OuvrageFactory> lof = Arrays.asList(new LivreFactory(),new CDFactory(),new DVDFactory());
+        OuvrageFactory of = lof.get(choix-1);
+        o = of.create();
         louv.add(o);
         System.out.println("ouvrage créé");
         List<Auteur> laut2 = new ArrayList<>(laut);
@@ -315,7 +246,7 @@ public class Gestion {
     }
 
     public static void main(String[] args) {
-        Gestion g = new Gestion();
+        GestionOld g = new GestionOld();
         g.populate();
         g.menu();
     }
