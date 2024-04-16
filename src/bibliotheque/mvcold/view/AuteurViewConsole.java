@@ -1,8 +1,7 @@
-package bibliotheque.mvc.view;
+package bibliotheque.mvcold.view;
 
 import bibliotheque.metier.Auteur;
 import bibliotheque.metier.TypeLivre;
-import bibliotheque.mvc.controller.AuteurController;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,13 +11,13 @@ import java.util.Scanner;
 import static bibliotheque.utilitaires.Utilitaire.*;
 
 
-public class AuteurViewConsole extends AbstractView<Auteur>  {
+public class AuteurViewConsole extends AbstractViewAuteur {
     Scanner sc = new Scanner(System.in);
 
-//TODO ajouter une variable d'instance de type Vue<Ouvrage> ainsi que le setter correspondant
+
     @Override
     public void menu() {
-        update(controller.getAll());
+        update(auteurController.getAll());
         List options = Arrays.asList("ajouter", "retirer", "rechercher","modifier","fin");
         do {
             int ch = choixListe(options);
@@ -42,17 +41,16 @@ public class AuteurViewConsole extends AbstractView<Auteur>  {
         } while (true);
     }
 
-    @Override
-    public void affMsg(String msg) {
-        System.out.println(msg);
-    }
-
     private void retirer() {
         int nl = choixElt(la)-1;
         Auteur a = la.get(nl);
-        boolean ok = controller.remove(a);
-        if(ok) affMsg("Auteur effacé");
-        else affMsg("Auteur non effacé");
+        boolean ok = auteurController.remove(a);
+        if(ok) affMsg("auteur effacé");
+        else affMsg("auteur non effacé");
+    }
+
+    private void affMsg(String msg) {
+        System.out.println(msg);
     }
 
 
@@ -65,7 +63,7 @@ public class AuteurViewConsole extends AbstractView<Auteur>  {
             System.out.println("nationalité");
             String nat = sc.nextLine();
             Auteur rech = new Auteur(nom, prenom, nat);
-            Auteur a = controller.search(rech);
+            Auteur a = auteurController.search(rech);
             if(a==null) affMsg("auteur inconnu");
             else {
                 affMsg(a.toString());
@@ -94,7 +92,7 @@ public class AuteurViewConsole extends AbstractView<Auteur>  {
                 System.out.println("erreur :" + e);
             }
         }while(true);
-        controller.update(a);
+        auteurController.update(a);
    }
 
 
@@ -114,13 +112,12 @@ public class AuteurViewConsole extends AbstractView<Auteur>  {
                 System.out.println("une erreur est survenue : "+e.getMessage());
             }
         }while(true);
-        controller.add(a);
+        auteurController.add(a);
     }
 
     public void special(Auteur a) {
 
         List options = Arrays.asList("lister ouvrages", "lister livres", "lister par genre","fin");
-        //TODO ajouter une option "ajouter des ouvrages" qui exploitera le getAll de la vue<Ouvrage>
         do {
             int ch = choixListe(options);
 
@@ -145,12 +142,12 @@ public class AuteurViewConsole extends AbstractView<Auteur>  {
     public void listerGenre(Auteur a) {
         System.out.println("genre :");
         String genre = sc.nextLine();
-        affListe(new ArrayList(((AuteurController)controller).listerOuvrages(a,genre)));
+        affListe(new ArrayList(auteurController.listerOuvrages(a,genre)));
     }
 
 
     public void listerOuvrages(Auteur a){
-        affList(new ArrayList(((AuteurController)controller).listerOuvrages(a)));
+        affList(new ArrayList(auteurController.listerOuvrages(a)));
     }
 
 
@@ -158,7 +155,7 @@ public class AuteurViewConsole extends AbstractView<Auteur>  {
         TypeLivre[] tlv = TypeLivre.values();
         int ch2 = choixListe(List.of(tlv));
         TypeLivre tl = tlv[ch2-1];
-        affList(new ArrayList((((AuteurController)controller).listerLivre(a,tl))));
+        affList(new ArrayList(auteurController.listerLivre(a,tl)));
     }
 
     @Override

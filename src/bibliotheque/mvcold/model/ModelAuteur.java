@@ -1,4 +1,4 @@
-package bibliotheque.mvc.model;
+package bibliotheque.mvcold.model;
 
 import bibliotheque.metier.Auteur;
 import bibliotheque.metier.Livre;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class AuteurModel extends DAOAuteur {
+public abstract class ModelAuteur extends DAOAuteur {
 
     private List<Auteur> ldatas = new ArrayList<>();
 
@@ -51,7 +51,6 @@ public class AuteurModel extends DAOAuteur {
     public List<Auteur> getAll() {
         return ldatas;
     }
-
     @Override
     public Set<Ouvrage> listerOuvrages(Auteur a) {
         return a.listerOuvrages();

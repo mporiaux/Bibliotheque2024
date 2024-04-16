@@ -1,8 +1,8 @@
-package bibliotheque.mvc.view;
+package bibliotheque.mvcold.view;
 
 import bibliotheque.metier.Auteur;
-import bibliotheque.mvc.controller.AuteurController;
 import bibliotheque.mvc.observer.Observer;
+import bibliotheque.mvcold.controller.AuteurController;
 
 import java.util.List;
 
