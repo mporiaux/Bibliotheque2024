@@ -44,7 +44,7 @@ public class AuteurViewConsole extends AbstractView<Auteur> {
     private void retirer() {
         int nl = choixElt(la)-1;
         Auteur a = la.get(nl);
-        boolean ok = auteurController.remove(a);
+        boolean ok = controller.remove(a);
         if(ok) affMsg("auteur effacé");
         else affMsg("auteur non effacé");
     }
@@ -63,7 +63,7 @@ public class AuteurViewConsole extends AbstractView<Auteur> {
             System.out.println("nationalité");
             String nat = sc.nextLine();
             Auteur rech = new Auteur(nom, prenom, nat);
-            Auteur a = auteurController.search(rech);
+            Auteur a = controller.search(rech);
             if(a==null) affMsg("auteur inconnu");
             else {
                 affMsg(a.toString());
