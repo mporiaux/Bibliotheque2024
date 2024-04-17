@@ -143,7 +143,7 @@ public class AuteurViewConsole extends AbstractView<Auteur> {
     public void listerGenre(Auteur a) {
         System.out.println("genre :");
         String genre = sc.nextLine();
-        affListe(new ArrayList(((ControllerSpecialAuteur)controller).listerOuvrages(a,genre));
+        affListe(new ArrayList(((ControllerSpecialAuteur)controller).listerOuvrages(a,genre)));
     }
 
 
