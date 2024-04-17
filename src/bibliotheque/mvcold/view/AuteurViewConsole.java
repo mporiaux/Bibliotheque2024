@@ -92,7 +92,7 @@ public class AuteurViewConsole extends AbstractView<Auteur> {
                 System.out.println("erreur :" + e);
             }
         }while(true);
-        auteurController.update(a);
+        controller.update(a);
    }
 
 
