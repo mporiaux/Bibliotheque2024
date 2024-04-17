@@ -1,16 +1,15 @@
-package bibliotheque.mvc.model;
+package bibliotheque.mvcbeta.model;
 
-import bibliotheque.metier.Lecteur;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ModelLecteur extends DAO<Lecteur> {
-    private List<Lecteur> ldatas = new ArrayList<>();
+public class ModelList<T> extends DAO<T>{
+    private List<T> ldatas = new ArrayList<>();
 
 
     @Override
-    public Lecteur add( Lecteur elt) {
+    public T add( T elt) {
         boolean present =ldatas.contains(elt);
         if (!present) {
             ldatas.add(elt);
@@ -20,14 +19,14 @@ public class ModelLecteur extends DAO<Lecteur> {
     }
 
     @Override
-    public boolean remove( Lecteur elt) {
+    public boolean remove( T elt) {
         boolean ok = ldatas.remove(elt);
         notifyObservers();
         return ok;
     }
 
     @Override
-    public Lecteur update(Lecteur elt) {
+    public T update(T elt) {
         int p = ldatas.indexOf(elt);
         if (p < 0) return null;
         ldatas.set(p, elt);
@@ -36,15 +35,14 @@ public class ModelLecteur extends DAO<Lecteur> {
     }
 
     @Override
-    public Lecteur read(Lecteur rech) {
+    public T read(T rech) {
         int p = ldatas.indexOf(rech);
         if(p<0) return null;
         return ldatas.get(p);
     }
 
     @Override
-    public List<Lecteur> getAll() {
+    public List<T> getAll() {
         return ldatas;
     }
-
 }

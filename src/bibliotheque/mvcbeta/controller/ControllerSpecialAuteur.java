@@ -1,4 +1,4 @@
-package bibliotheque.mvc.controller;
+package bibliotheque.mvcbeta.controller;
 
 import bibliotheque.metier.Auteur;
 import bibliotheque.metier.Livre;

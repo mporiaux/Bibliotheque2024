@@ -1,12 +1,13 @@
-package bibliotheque.mvc.controller;
+package bibliotheque.mvcbeta.controller;
 
-import bibliotheque.mvc.model.DAO;
-import bibliotheque.mvc.view.AbstractView;
-
+import bibliotheque.mvcbeta.model.DAO;
+import bibliotheque.mvcbeta.view.AbstractView;
 
 import java.util.List;
 
+
 public class Controller<T> {
+
     protected DAO<T> model;
     protected AbstractView<T> view;
 
@@ -28,7 +29,9 @@ public class Controller<T> {
     public boolean remove(T elt) {
         return model.remove(elt);
     }
-    public T update(T elt) {  return model.update(elt); }
+    public T update(T elt) {
+        return model.update(elt);
+    }
 
     public T search(T rech) {
         return  model.read(rech);

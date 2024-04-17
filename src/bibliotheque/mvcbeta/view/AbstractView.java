@@ -1,13 +1,11 @@
-package bibliotheque.mvc.view;
+package bibliotheque.mvcbeta.view;
 
+import bibliotheque.mvcbeta.controller.Controller;
 import bibliotheque.mvcbeta.observer.Observer;
-import bibliotheque.mvc.controller.Controller;
 
 import java.util.List;
 
-
-public abstract  class AbstractView<T> implements Observer {
-
+public abstract class AbstractView<T> implements Observer {
     protected Controller<T> controller;
     protected List<T> la;
 
@@ -16,6 +14,8 @@ public abstract  class AbstractView<T> implements Observer {
     }
 
     public abstract void menu();
+
+    public abstract void affMsg(String msg);
 
     public abstract void affList(List la);
 

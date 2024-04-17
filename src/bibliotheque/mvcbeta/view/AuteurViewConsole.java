@@ -1,8 +1,8 @@
-package bibliotheque.mvc.view;
+package bibliotheque.mvcbeta.view;
 
 import bibliotheque.metier.Auteur;
 import bibliotheque.metier.TypeLivre;
-import bibliotheque.mvc.controller.ControllerSpecialAuteur;
+import bibliotheque.mvcbeta.controller.AuteurController;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,7 +12,7 @@ import java.util.Scanner;
 import static bibliotheque.utilitaires.Utilitaire.*;
 
 
-public class AuteurViewConsole extends AbstractView<Auteur> {
+public class AuteurViewConsole extends AbstractView<Auteur>  {
     Scanner sc = new Scanner(System.in);
 
 
@@ -42,16 +42,17 @@ public class AuteurViewConsole extends AbstractView<Auteur> {
         } while (true);
     }
 
+    @Override
+    public void affMsg(String msg) {
+        System.out.println(msg);
+    }
+
     private void retirer() {
         int nl = choixElt(la)-1;
         Auteur a = la.get(nl);
         boolean ok = controller.remove(a);
-        if(ok) affMsg("auteur effacé");
-        else affMsg("auteur non effacé");
-    }
-
-    private void affMsg(String msg) {
-        System.out.println(msg);
+        if(ok) affMsg("Auteur effacé");
+        else affMsg("Auteur non effacé");
     }
 
 
@@ -119,6 +120,7 @@ public class AuteurViewConsole extends AbstractView<Auteur> {
     public void special(Auteur a) {
 
         List options = Arrays.asList("lister ouvrages", "lister livres", "lister par genre","fin");
+
         do {
             int ch = choixListe(options);
 
@@ -143,12 +145,12 @@ public class AuteurViewConsole extends AbstractView<Auteur> {
     public void listerGenre(Auteur a) {
         System.out.println("genre :");
         String genre = sc.nextLine();
-        affListe(new ArrayList(((ControllerSpecialAuteur)controller).listerOuvrages(a,genre)));
+        affListe(new ArrayList(((AuteurController)controller).listerOuvrages(a,genre)));
     }
 
 
     public void listerOuvrages(Auteur a){
-        affList(new ArrayList(((ControllerSpecialAuteur)controller).listerOuvrages(a)));
+        affList(new ArrayList(((AuteurController)controller).listerOuvrages(a)));
     }
 
 
@@ -156,7 +158,7 @@ public class AuteurViewConsole extends AbstractView<Auteur> {
         TypeLivre[] tlv = TypeLivre.values();
         int ch2 = choixListe(List.of(tlv));
         TypeLivre tl = tlv[ch2-1];
-        affList(new ArrayList(((ControllerSpecialAuteur)controller).listerLivre(a,tl)));
+        affList(new ArrayList((((AuteurController)controller).listerLivre(a,tl))));
     }
 
     @Override
