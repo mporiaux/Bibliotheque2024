@@ -11,13 +11,13 @@ import java.util.Scanner;
 import static bibliotheque.utilitaires.Utilitaire.*;
 
 
-public class AuteurViewConsole extends AbstractViewAuteur {
+public class AuteurViewConsole extends AbstractView<Auteur> {
     Scanner sc = new Scanner(System.in);
 
 
     @Override
     public void menu() {
-        update(auteurController.getAll());
+        update(controller.getAll());
         List options = Arrays.asList("ajouter", "retirer", "rechercher","modifier","fin");
         do {
             int ch = choixListe(options);
@@ -112,7 +112,7 @@ public class AuteurViewConsole extends AbstractViewAuteur {
                 System.out.println("une erreur est survenue : "+e.getMessage());
             }
         }while(true);
-        auteurController.add(a);
+        controller.add(a);
     }
 
     public void special(Auteur a) {
@@ -142,12 +142,12 @@ public class AuteurViewConsole extends AbstractViewAuteur {
     public void listerGenre(Auteur a) {
         System.out.println("genre :");
         String genre = sc.nextLine();
-        affListe(new ArrayList(auteurController.listerOuvrages(a,genre)));
+       // affListe(new ArrayList(controller.listerOuvrages(a,genre)));
     }
 
 
     public void listerOuvrages(Auteur a){
-        affList(new ArrayList(auteurController.listerOuvrages(a)));
+        //affList(new ArrayList(controller.listerOuvrages(a)));
     }
 
 
@@ -155,7 +155,7 @@ public class AuteurViewConsole extends AbstractViewAuteur {
         TypeLivre[] tlv = TypeLivre.values();
         int ch2 = choixListe(List.of(tlv));
         TypeLivre tl = tlv[ch2-1];
-        affList(new ArrayList(auteurController.listerLivre(a,tl)));
+        //affList(new ArrayList(controller.listerLivre(a,tl)));
     }
 
     @Override
