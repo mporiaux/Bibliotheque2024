@@ -102,7 +102,7 @@
 
 
             Livre l = new Livre("Vingt mille lieues sous les mers",10, LocalDate.of(1880,1,1),1.50,"français","aventure","a125",350,TypeLivre.ROMAN,"histoire de sous-marin");
-            om.add(l);
+            om.getAll().add(l);
             a1.addOuvrage(l);
 
 
@@ -110,7 +110,7 @@
             d.getAutresLangues().add("français");
             d.getAutresLangues().add("italien");
             d.getSousTitres().add("néerlandais");
-            om.add(d);
+            om.getAll().add(d);
 
             a2.addOuvrage(d);
 
@@ -118,32 +118,32 @@
 
 
             CD c = new CD("The Compil 2023",0,LocalDate.of(2023,1,1),2,"English","POP",1245,(byte)20,LocalTime.of(1,40,0));
-            om.add(c);
+            om.getAll().add(c);
 
             Rayon r = new Rayon("r12","aventure");
-            rm.add(r);
+            rm.getAll().add(r);
 
             Exemplaire e = new Exemplaire("m12","état neuf",l);
-            em.add(e);
+            em.getAll().add(e);
             e.setRayon(r);
 
 
             r = new Rayon("r45","science fiction");
-            rm.add(r);
+            rm.getAll().add(r);
 
             e = new Exemplaire("d12","griffé",d);
-            em.add(e);
+            em.getAll().add(e);
 
             e.setRayon(r);
 
 
             Lecteur lec = new Lecteur("Dupont","Jean",LocalDate.of(2000,1,4),"Mons","jean.dupont@mail.com","0458774411");
-            lm.add(lec);
+            lm.getAll().add(lec);
 
             LOCATIONS.put(e,lec);
 
             lec = new Lecteur("Durant","Aline",LocalDate.of(1980,10,10),"Binche","aline.durant@mail.com","045874444");
-            lm.add(lec);
+            lm.getAll().add(lec);
         }
 
         public static void main(String[] args) {
