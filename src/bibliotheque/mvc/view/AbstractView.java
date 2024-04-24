@@ -1,6 +1,6 @@
 package bibliotheque.mvc.view;
 
-import bibliotheque.mvcbeta.observer.Observer;
+import bibliotheque.mvc.observer.Observer;
 import bibliotheque.mvc.controller.Controller;
 
 import java.util.List;

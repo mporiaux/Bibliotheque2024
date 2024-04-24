@@ -1,16 +1,12 @@
 package bibliotheque.mvc.view;
 
-import bibliotheque.metier.Exemplaire;
-import bibliotheque.metier.Ouvrage;
-import bibliotheque.metier.TypeOuvrage;
+import bibliotheque.metier.*;
 import bibliotheque.mvc.controller.ControllerSpecialOuvrage;
 import bibliotheque.utilitaires.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
+import static bibliotheque.mvc.GestionMVC.av;
 import static bibliotheque.utilitaires.Utilitaire.*;
 
 
@@ -58,7 +54,38 @@ public class OuvrageViewConsole extends AbstractView<Ouvrage> {
 
 
     public void rechercher() {
-        //TODO rechercher ouvrage en demandant type d'ouvrage, puis l'info unique relative à au type recherché
+        TypeOuvrage[] tto = TypeOuvrage.values();
+        List<TypeOuvrage> lto = Arrays.asList(tto);
+        int choix = Utilitaire.choixListe(lto);
+        Ouvrage o=null;
+        switch (choix){
+            case 1 :
+                System.out.print("isbn :");
+                String isbn = sc.nextLine();
+                o=new Livre("",0,null,0,"","",isbn,0, TypeLivre.ROMAN,"");
+                break;
+
+            case 2 :
+                System.out.print("code :");
+                int codecd = lireInt();
+                o=new CD("",0,null,0,"","",codecd,(byte)0, null);
+                break;
+            case 3 :
+                System.out.print("code :");
+                int codedvd = lireInt();
+                o=new DVD("",0,null,0,"","",codedvd, null,(byte)0);
+                break;
+
+        }
+        o=controller.search(o);
+        if(o!=null){
+            affMsg(o.toString());
+        }
+        else {
+            affMsg("ouvrage inconnu");
+        }
+        //TODO réalisé
+
     }
 
 
@@ -80,15 +107,32 @@ public class OuvrageViewConsole extends AbstractView<Ouvrage> {
 
     public void ajouter() {
         TypeOuvrage[] tto = TypeOuvrage.values();
-        List<TypeOuvrage> lto = new ArrayList<>(Arrays.asList(tto));
+        List<TypeOuvrage> lto = Arrays.asList(tto);
         int choix = Utilitaire.choixListe(lto);
-        Ouvrage a = null;
+        Ouvrage o = null;
         List<OuvrageFactory> lof = new ArrayList<>(Arrays.asList(new LivreFactory(),new CDFactory(),new DVDFactory()));
-        a = lof.get(choix-1).create();
-        //TODO affecter un ou plusieurs auteurs
-        //TODO trier les auteurs présentés par ordre de nom et prénom  ==>  classe anonyme
-        //TODO ne pas présenter les auteurs déjà enregistrés pour cet ouvrage
-        controller.add(a);
+        o = lof.get(choix-1).create();
+        List<Auteur> la= av.getAll();
+        la.sort(new Comparator<Auteur>() {
+                    @Override
+                    public int compare(Auteur o1, Auteur o2) {
+                        if (o1.getNom().equals(o2.getNom())) return o1.getPrenom().compareTo(o2.getPrenom());
+                        return o1.getNom().compareTo(o2.getNom());
+                    }
+                });
+        do {
+            Iterator<Auteur> ita = la.iterator();
+            while (ita.hasNext()) {
+                Auteur a = ita.next();
+                if (o.getLauteurs().contains(a)) ita.remove();
+            }
+            int ch = choixListe(la);
+            if (ch == 0) break;
+            o.addAuteur(la.get(ch-1));
+        }while(true);
+
+        //TODO utiliser Lambda
+        controller.add(o);
     }
 
     protected void special() {

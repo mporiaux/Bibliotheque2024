@@ -68,10 +68,10 @@ public class Utilitaire {
     public static int choixElt(List l){
         int choix;
         do {
-            System.out.println("choix :");
+            System.out.println("choix (0 pour aucun) :");
             choix = lireInt();
 
-        } while(choix <1 || choix > l.size());
+        } while(choix <0 || choix > l.size());
         return choix;
     }
 
