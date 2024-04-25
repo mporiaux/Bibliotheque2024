@@ -101,8 +101,10 @@ public class ExemplaireViewConsole extends AbstractView<Exemplaire> {
                 System.out.println("description ");
                 String descr = sc.nextLine();
                 System.out.println("ouvrage : ");
-                List<Ouvrage> lo = GestionMVC.ov.getAll((o1, o2) -> o1.getTitre().compareTo(o2.getTitre()));
-               // lo.sort((o1, o2) -> o1.getTitre().compareTo(o2.getTitre()));
+              //  List<Ouvrage> lo = GestionMVC.ov.getAll((o1, o2) -> o1.getTitre().compareTo(o2.getTitre()));
+                List<Ouvrage> lo = GestionMVC.ov.getAll(Comparator.comparing(Ouvrage::getTitre));
+              // lo.sort((o1, o2) -> o1.getTitre().compareTo(o2.getTitre()));
+               //lo.sort(Comparator.comparing(Ouvrage::getTitre));
                 int ch = choixListe(lo);
                 a = new Exemplaire(mat, descr,lo.get(ch-1));
                 System.out.println("rayon");

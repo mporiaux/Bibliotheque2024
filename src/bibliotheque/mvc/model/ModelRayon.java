@@ -25,7 +25,9 @@ public  class ModelRayon extends DAO<Rayon> implements DAOSpecialRayon{
     @Override
     public boolean remove( Rayon elt) {
         boolean ok = ldatas.remove(elt);
-       
+        for(Exemplaire ex : elt.getLex()){
+            GestionMVC.em.remove(ex);
+        }
         notifyObservers();
         return ok;
     }
