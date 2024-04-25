@@ -2,6 +2,7 @@ package bibliotheque.mvc.model;
 
 import bibliotheque.metier.Exemplaire;
 import bibliotheque.metier.Rayon;
+import bibliotheque.mvc.GestionMVC;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ public  class ModelRayon extends DAO<Rayon> implements DAOSpecialRayon{
     @Override
     public boolean remove( Rayon elt) {
         boolean ok = ldatas.remove(elt);
+       
         notifyObservers();
         return ok;
     }

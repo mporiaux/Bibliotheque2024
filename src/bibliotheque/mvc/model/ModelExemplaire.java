@@ -3,6 +3,7 @@ package bibliotheque.mvc.model;
 import bibliotheque.metier.Exemplaire;
 import bibliotheque.metier.Lecteur;
 import bibliotheque.metier.Mail;
+import bibliotheque.mvc.GestionMVC;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,8 @@ public class ModelExemplaire extends DAO<Exemplaire> implements DAOSpecialExempl
     @Override
     public boolean remove( Exemplaire elt) {
         boolean ok = ldatas.remove(elt);
+        elt.setOuvrage(null);
+        GestionMVC.LOCATIONS.remove(elt);
         notifyObservers();
         return ok;
     }

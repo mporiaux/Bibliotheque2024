@@ -2,10 +2,19 @@ package bibliotheque.mvc.model;
 
 import bibliotheque.metier.Lecteur;
 
+import java.awt.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
-public class ModelLecteur extends DAO<Lecteur> {
+import static bibliotheque.utilitaires.Utilitaire.getDate;
+
+public class ModelLecteur extends DAO<Lecteur> implements DAOSpecialLecteur {
     private List<Lecteur> ldatas = new ArrayList<>();
 
 
@@ -45,6 +54,34 @@ public class ModelLecteur extends DAO<Lecteur> {
     @Override
     public List<Lecteur> getAll() {
         return ldatas;
+    }
+
+
+    @Override
+    public void chargementParFichier(){
+        File f = new File("d:/nouveauxLecteurs.txt");
+        try(FileReader fr = new FileReader(f)){
+            Scanner sc = new Scanner(fr);
+            while(sc.hasNext()){
+                String ligne =sc.nextLine();
+                String[] infos = ligne.split(":");
+                String nom=infos[0];
+                String prenom=infos[1];
+                String dns=infos[2];
+                LocalDate dn = getDate(dns);
+                String adresse=infos[3];
+                String mail=infos[4];
+                String tel=infos[5];
+                add(new Lecteur(nom,prenom,dn,adresse,mail,tel));
+            }
+        } catch (FileNotFoundException e) {
+            System.err.println("erreur de fichier : "+e);
+        } catch (IOException e) {
+            System.err.println("erreur de fichier : "+e);
+        }
+        catch(Exception e){
+            System.err.println("erreur de fichier : "+e);
+        }
     }
 
 }

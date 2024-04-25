@@ -1,6 +1,7 @@
 package bibliotheque.mvc.view;
 
 import bibliotheque.metier.Lecteur;
+import bibliotheque.mvc.controller.ControllerSpecialLecteur;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -15,7 +16,7 @@ public class LecteurViewConsole extends AbstractView<Lecteur> {
     @Override
     public void menu() {
         update(controller.getAll());
-        List options = Arrays.asList("ajouter", "retirer", "rechercher","modifier","fin");
+        List options = Arrays.asList("ajouter", "retirer", "rechercher","modifier","chargement par fichier","fin");
         do {
             int ch = choixListe(options);
 
@@ -33,9 +34,16 @@ public class LecteurViewConsole extends AbstractView<Lecteur> {
                     modifier();
                     break;
                 case 5:
+                    chargement();
+                    break;
+                case 6:
                     return;
             }
         } while (true);
+    }
+
+    private void chargement() {
+        ((ControllerSpecialLecteur)controller).chargementLecteurParFichier();
     }
 
     @Override
@@ -119,5 +127,7 @@ public class LecteurViewConsole extends AbstractView<Lecteur> {
         l=controller.add(l);
         affMsg("création du lecteur : "+l);
     }
+
+
 
 }

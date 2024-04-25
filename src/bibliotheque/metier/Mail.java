@@ -1,5 +1,8 @@
 package bibliotheque.metier;
 
+import java.io.FileWriter;
+import java.io.PrintWriter;
+
 public class Mail {
     private String objet;
     private String message;
@@ -33,6 +36,17 @@ public class Mail {
 
     public void setDateEnvoi(String dateEnvoi) {
         this.dateEnvoi = dateEnvoi;
+    }
+
+    public void envoi(Lecteur l){
+        try(FileWriter fw = new FileWriter("d:/mails/"+l.getMail()+dateEnvoi+".txt",true) ){
+            PrintWriter pr = new PrintWriter(fw);
+            pr.println("objet :"+objet);
+            pr.println(message);
+        }
+        catch (Exception e){
+            System.err.println("une erreur s'est produite : "+e);
+        }
     }
 
     @Override

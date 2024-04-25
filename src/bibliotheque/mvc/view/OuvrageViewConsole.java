@@ -80,12 +80,11 @@ public class OuvrageViewConsole extends AbstractView<Ouvrage> {
         o=controller.search(o);
         if(o!=null){
             affMsg(o.toString());
+            special(o);
         }
         else {
             affMsg("ouvrage inconnu");
         }
-        //TODO réalisé
-
     }
 
 
@@ -112,14 +111,8 @@ public class OuvrageViewConsole extends AbstractView<Ouvrage> {
         Ouvrage o = null;
         List<OuvrageFactory> lof = new ArrayList<>(Arrays.asList(new LivreFactory(),new CDFactory(),new DVDFactory()));
         o = lof.get(choix-1).create();
-        List<Auteur> la= av.getAll();
-        la.sort(new Comparator<Auteur>() {
-                    @Override
-                    public int compare(Auteur o1, Auteur o2) {
-                        if (o1.getNom().equals(o2.getNom())) return o1.getPrenom().compareTo(o2.getPrenom());
-                        return o1.getNom().compareTo(o2.getNom());
-                    }
-                });
+        List<Auteur> la= av.getAll(Comparator.comparing(Auteur::getNom).thenComparing(Auteur::getPrenom));
+      //  la.sort(Comparator.comparing(Auteur::getNom).thenComparing(Auteur::getPrenom));
         do {
             Iterator<Auteur> ita = la.iterator();
             while (ita.hasNext()) {
@@ -130,14 +123,11 @@ public class OuvrageViewConsole extends AbstractView<Ouvrage> {
             if (ch == 0) break;
             o.addAuteur(la.get(ch-1));
         }while(true);
-
-        //TODO utiliser Lambda
         controller.add(o);
     }
 
-    protected void special() {
-        int choix =  choixElt(la);
-        Ouvrage o = la.get(choix-1);
+    protected void special(Ouvrage o) {
+
 
         List options = new ArrayList<>(Arrays.asList("lister exemplaires", "lister exemplaires en location", "lister exemplaires libres","fin"));
         do {
